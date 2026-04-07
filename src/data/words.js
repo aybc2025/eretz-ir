@@ -1411,4 +1411,12 @@ export function checkAnswer(letter, category, answer) {
   return { valid: false, known: false };
 }
 
+// מחזיר תשובה נכונה אקראית עבור אות וקטגוריה
+export function getRandomCorrectAnswer(letter, category) {
+  const categoryWords = words[letter]?.[category] ?? [];
+  if (categoryWords.length === 0) return null;
+  const pick = categoryWords[Math.floor(Math.random() * categoryWords.length)];
+  return pick[0]; // המילה הראשונה = הצגה למשתמש
+}
+
 export default words;

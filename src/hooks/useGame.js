@@ -1,5 +1,5 @@
 import { useState, useCallback } from "react";
-import { LETTERS, CATEGORIES, checkAnswer } from "../data/words";
+import { LETTERS, CATEGORIES, checkAnswer, getRandomCorrectAnswer } from "../data/words";
 
 export const SCREENS = {
   START: "start",
@@ -67,11 +67,17 @@ export function useGame() {
         }
       }
 
+      const suggestion =
+        status === "empty" || status === "wrong_letter"
+          ? getRandomCorrectAnswer(letter, cat.id)
+          : null;
+
       newResults[cat.id] = {
         answer: answer.trim(),
         status,
         points,
         canonical: check.canonical,
+        suggestion,
       };
       totalScore += points;
     }

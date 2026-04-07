@@ -504,6 +504,8 @@ body {
 .ri-text  { flex: 1; display: flex; flex-direction: column; gap: .1rem; min-width: 0; }
 .ri-cat   { font-family: 'Fredoka One', cursive; font-size: .85rem; color: var(--text-dim); }
 .ri-msg   { font-size: .92rem; color: var(--text); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.ri-suggestion { font-size: .8rem; color: var(--cyan); opacity: .9; }
+.ri-suggestion strong { color: var(--yellow); }
 .ri-icon  { font-size: 1.2rem; flex-shrink: 0; }
 .ri-pts   {
   font-family: 'Fredoka One', cursive;

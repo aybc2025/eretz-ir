@@ -2,10 +2,10 @@ import { useEffect, useRef } from "react";
 import { CATEGORIES } from "../data/words";
 
 const STATUS_META = {
-  known:         { icon: "✅", color: "#22c55e", msg: (ans, cat) => `${ans} — נכון! יופי!` },
-  unknown:       { icon: "❓", color: "#f59e0b", msg: (ans) => `${ans} — לא הכרנו, אבל ייתכן שנכון! +5` },
-  wrong_letter:  { icon: "❌", color: "#ef4444", msg: (ans, cat, letter) => `${ans} — לא מתחיל ב${letter}...` },
-  empty:         { icon: "⬜", color: "#64748b", msg: () => "לא מילאת — אין ניקוד" },
+  known:        { icon: "✅", color: "#22c55e" },
+  unknown:      { icon: "❓", color: "#f59e0b" },
+  wrong_letter: { icon: "❌", color: "#ef4444" },
+  empty:        { icon: "⬜", color: "#64748b" },
 };
 
 function Confetti({ canvas }) {
@@ -90,7 +90,15 @@ export default function ResultScreen({ letter, results, score, onPlayAgain, onHo
               <span className="ri-emoji">{cat.emoji}</span>
               <div className="ri-text">
                 <span className="ri-cat">{cat.id}</span>
-                <span className="ri-msg">{meta.msg(r.answer, cat.id, letter)}</span>
+                <span className="ri-msg">
+                  {r.status === "known" && `${r.answer} — נכון! יופי!`}
+                  {r.status === "unknown" && `${r.answer} — לא הכרנו, אבל ייתכן שנכון! +5`}
+                  {r.status === "wrong_letter" && `${r.answer} — לא מתחיל ב${letter}...`}
+                  {r.status === "empty" && "לא מילאת — אין ניקוד"}
+                </span>
+                {r.suggestion && (
+                  <span className="ri-suggestion">💡 למשל: <strong>{r.suggestion}</strong></span>
+                )}
               </div>
               <span className="ri-icon">{meta.icon}</span>
               <span className="ri-pts">+{r.points}</span>
