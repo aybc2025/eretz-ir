@@ -3,6 +3,7 @@ import react from "@vitejs/plugin-react";
 import { VitePWA } from "vite-plugin-pwa";
 
 export default defineConfig({
+  base: "/eretz-ir/",
   plugins: [
     react(),
     VitePWA({
@@ -18,10 +19,10 @@ export default defineConfig({
         orientation: "portrait",
         lang: "he",
         dir: "rtl",
-        start_url: "/",
+        start_url: "/eretz-ir/",
         icons: [
           {
-            src: "/icons/icon-192.png",
+            src: "/eretz-ir/icons/icon-192.png",
             sizes: "192x192",
             type: "image/png",
           },
