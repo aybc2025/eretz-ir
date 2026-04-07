@@ -1,0 +1,561 @@
+@import url('https://fonts.googleapis.com/css2?family=Fredoka+One&family=Rubik:wght@400;500;700&display=swap');
+
+/* ─── Design Tokens ─── */
+:root {
+  --bg:        #0b1120;
+  --bg2:       #111827;
+  --bg3:       #1e293b;
+  --yellow:    #fbbf24;
+  --cyan:      #06b6d4;
+  --pink:      #f472b6;
+  --green:     #4ade80;
+  --red:       #f87171;
+  --text:      #f1f5f9;
+  --text-dim:  #94a3b8;
+  --radius:    18px;
+  --radius-sm: 10px;
+  --shadow:    0 8px 32px rgba(0,0,0,.5);
+}
+
+/* ─── Reset ─── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html {
+  font-size: 16px;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  font-family: 'Rubik', sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  direction: rtl;
+  min-height: 100dvh;
+  overflow-x: hidden;
+}
+
+#root { min-height: 100dvh; }
+
+/* ─── App Root ─── */
+.app-root {
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* ─── Screens base ─── */
+.screen {
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 1.5rem 1rem;
+  position: relative;
+  overflow: hidden;
+}
+
+/* ─────────────────────────────
+   START SCREEN
+───────────────────────────── */
+.start-screen {
+  background:
+    radial-gradient(ellipse 80% 60% at 50% 0%, rgba(6,182,212,.18) 0%, transparent 70%),
+    radial-gradient(ellipse 60% 40% at 80% 100%, rgba(251,191,36,.12) 0%, transparent 60%),
+    var(--bg);
+}
+
+/* floating emojis background */
+.start-bg {
+  position: absolute; inset: 0;
+  pointer-events: none;
+}
+.floating-emoji {
+  position: absolute;
+  font-size: clamp(1.8rem, 5vw, 3rem);
+  opacity: .15;
+  animation: float calc(6s + var(--i) * 1.2s) ease-in-out infinite alternate;
+  left: calc(10% + var(--i) * 18%);
+  top: calc(5% + var(--i) * 15%);
+}
+@keyframes float {
+  from { transform: translateY(0) rotate(-5deg); }
+  to   { transform: translateY(-28px) rotate(5deg); }
+}
+
+.start-content {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.5rem;
+  width: 100%;
+  max-width: 380px;
+}
+
+.game-title {
+  font-family: 'Fredoka One', cursive;
+  display: flex;
+  align-items: center;
+  gap: .5rem;
+  line-height: 1;
+}
+.title-line1 {
+  font-size: clamp(3.5rem, 14vw, 6rem);
+  color: var(--yellow);
+  text-shadow: 0 0 40px rgba(251,191,36,.5);
+  animation: pulse-yellow 2.5s ease-in-out infinite;
+}
+.title-separator {
+  font-size: 2rem;
+  color: var(--cyan);
+  opacity: .6;
+}
+.title-line2 {
+  font-size: clamp(3.5rem, 14vw, 6rem);
+  color: var(--cyan);
+  text-shadow: 0 0 40px rgba(6,182,212,.5);
+  animation: pulse-cyan 2.5s ease-in-out infinite .4s;
+}
+@keyframes pulse-yellow {
+  0%,100% { text-shadow: 0 0 30px rgba(251,191,36,.4); }
+  50%      { text-shadow: 0 0 60px rgba(251,191,36,.8), 0 0 100px rgba(251,191,36,.3); }
+}
+@keyframes pulse-cyan {
+  0%,100% { text-shadow: 0 0 30px rgba(6,182,212,.4); }
+  50%      { text-shadow: 0 0 60px rgba(6,182,212,.8), 0 0 100px rgba(6,182,212,.3); }
+}
+
+.game-subtitle {
+  font-family: 'Fredoka One', cursive;
+  font-size: 1.1rem;
+  color: var(--text-dim);
+  letter-spacing: .15em;
+  margin-top: -.5rem;
+}
+
+.btn-start {
+  font-family: 'Fredoka One', cursive;
+  font-size: 1.6rem;
+  background: linear-gradient(135deg, var(--yellow), #f59e0b);
+  color: #0b1120;
+  border: none;
+  border-radius: 50px;
+  padding: .8em 2.2em;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: .5rem;
+  box-shadow: 0 4px 24px rgba(251,191,36,.4), 0 2px 6px rgba(0,0,0,.4);
+  transition: transform .15s, box-shadow .15s;
+  margin-top: .5rem;
+}
+.btn-start:hover  { transform: translateY(-3px) scale(1.03); box-shadow: 0 8px 32px rgba(251,191,36,.55); }
+.btn-start:active { transform: scale(.97); }
+.btn-start-icon   { font-size: 1.4rem; }
+
+.btn-scores {
+  font-family: 'Rubik', sans-serif;
+  font-size: .95rem;
+  background: transparent;
+  color: var(--cyan);
+  border: 1.5px solid rgba(6,182,212,.4);
+  border-radius: 50px;
+  padding: .45em 1.4em;
+  cursor: pointer;
+  transition: background .2s, border-color .2s;
+}
+.btn-scores:hover { background: rgba(6,182,212,.1); border-color: var(--cyan); }
+
+/* scores panel */
+.scores-panel {
+  width: 100%;
+  background: var(--bg3);
+  border-radius: var(--radius);
+  padding: 1rem;
+  border: 1px solid rgba(255,255,255,.07);
+}
+.scores-panel h3 {
+  font-family: 'Fredoka One', cursive;
+  color: var(--yellow);
+  margin-bottom: .75rem;
+  font-size: 1.1rem;
+}
+.scores-panel ul { list-style: none; display: flex; flex-direction: column; gap: .4rem; }
+.score-row {
+  display: flex;
+  align-items: center;
+  gap: .6rem;
+  font-size: .9rem;
+  padding: .35rem .5rem;
+  border-radius: var(--radius-sm);
+  background: rgba(255,255,255,.03);
+}
+.score-rank  { color: var(--text-dim); width: 2rem; }
+.score-letter {
+  font-family: 'Fredoka One', cursive;
+  color: var(--cyan);
+  font-size: 1.2rem;
+  width: 2rem;
+  text-align: center;
+}
+.score-pts   { color: var(--yellow); font-weight: 700; flex: 1; }
+.score-date  { color: var(--text-dim); font-size: .8rem; }
+
+/* ─────────────────────────────
+   REVEAL SCREEN
+───────────────────────────── */
+.reveal-screen {
+  background:
+    radial-gradient(ellipse 90% 70% at 50% 50%, rgba(251,191,36,.15) 0%, transparent 65%),
+    var(--bg);
+  gap: 1.5rem;
+}
+
+.reveal-label {
+  font-family: 'Fredoka One', cursive;
+  font-size: 1.4rem;
+  color: var(--text-dim);
+  opacity: 0;
+  transition: opacity .4s;
+}
+.phase-showing .reveal-label,
+.phase-ready .reveal-label { opacity: 1; }
+
+.letter-burst {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.letter-glow {
+  position: absolute;
+  width: 220px; height: 220px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(251,191,36,.35) 0%, transparent 70%);
+  opacity: 0;
+  transform: scale(.3);
+  transition: opacity .5s, transform .5s;
+}
+.phase-showing .letter-glow,
+.phase-ready .letter-glow {
+  opacity: 1;
+  transform: scale(1);
+  animation: glow-pulse 1.5s ease-in-out infinite;
+}
+@keyframes glow-pulse {
+  0%,100% { transform: scale(1); }
+  50%      { transform: scale(1.15); }
+}
+
+.big-letter {
+  font-family: 'Fredoka One', cursive;
+  font-size: clamp(7rem, 30vw, 12rem);
+  color: var(--yellow);
+  line-height: 1;
+  position: relative;
+  z-index: 1;
+  opacity: 0;
+  transform: scale(.2) rotate(-20deg);
+  transition: opacity .4s .1s, transform .5s .1s cubic-bezier(.34,1.56,.64,1);
+}
+.phase-showing .big-letter,
+.phase-ready .big-letter {
+  opacity: 1;
+  transform: scale(1) rotate(0deg);
+}
+
+.reveal-hint {
+  font-family: 'Fredoka One', cursive;
+  font-size: 1.2rem;
+  color: var(--cyan);
+  opacity: 0;
+  transform: translateY(10px);
+  transition: opacity .3s .6s, transform .3s .6s;
+}
+.phase-showing .reveal-hint,
+.phase-ready .reveal-hint { opacity: 1; transform: none; }
+
+/* ─────────────────────────────
+   GAME SCREEN
+───────────────────────────── */
+.game-screen {
+  background: var(--bg);
+  justify-content: flex-start;
+  padding-top: 1.2rem;
+  gap: 0;
+}
+
+.game-header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: .3rem;
+  margin-bottom: 1.2rem;
+}
+
+.current-letter-badge {
+  font-family: 'Fredoka One', cursive;
+  font-size: 3.5rem;
+  line-height: 1;
+  color: var(--yellow);
+  width: 80px; height: 80px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(251,191,36,.12);
+  border-radius: 50%;
+  border: 2px solid rgba(251,191,36,.3);
+  box-shadow: 0 0 30px rgba(251,191,36,.2);
+}
+
+.game-instruct {
+  font-size: .95rem;
+  color: var(--text-dim);
+}
+.game-instruct strong { color: var(--yellow); }
+
+.game-fields {
+  display: flex;
+  flex-direction: column;
+  gap: .75rem;
+  width: 100%;
+  max-width: 400px;
+}
+
+.field-row {
+  display: flex;
+  align-items: center;
+  gap: .75rem;
+  background: var(--bg3);
+  border-radius: var(--radius);
+  padding: .65rem 1rem;
+  border: 1.5px solid rgba(255,255,255,.06);
+  transition: border-color .2s;
+}
+.field-row:focus-within {
+  border-color: rgba(6,182,212,.5);
+  background: rgba(6,182,212,.05);
+}
+
+.field-label {
+  display: flex;
+  align-items: center;
+  gap: .35rem;
+  min-width: 4.5rem;
+  flex-shrink: 0;
+}
+.field-emoji { font-size: 1.3rem; }
+.field-name  {
+  font-family: 'Fredoka One', cursive;
+  font-size: 1.05rem;
+  color: var(--cyan);
+}
+
+.field-input {
+  flex: 1;
+  background: transparent;
+  border: none;
+  outline: none;
+  color: var(--text);
+  font-family: 'Rubik', sans-serif;
+  font-size: 1.05rem;
+  text-align: right;
+  direction: rtl;
+}
+.field-input::placeholder { color: rgba(148,163,184,.4); }
+
+.game-footer {
+  margin-top: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: .9rem;
+  width: 100%;
+  max-width: 400px;
+}
+
+.progress-dots {
+  display: flex;
+  gap: .5rem;
+}
+.dot {
+  width: 10px; height: 10px;
+  border-radius: 50%;
+  background: rgba(255,255,255,.15);
+  transition: background .3s, transform .3s;
+}
+.dot.filled {
+  background: var(--green);
+  transform: scale(1.2);
+}
+
+.btn-submit {
+  font-family: 'Fredoka One', cursive;
+  font-size: 1.4rem;
+  background: linear-gradient(135deg, var(--cyan), #0891b2);
+  color: #fff;
+  border: none;
+  border-radius: 50px;
+  padding: .7em 2.5em;
+  cursor: pointer;
+  width: 100%;
+  box-shadow: 0 4px 20px rgba(6,182,212,.35);
+  transition: transform .15s, box-shadow .15s;
+}
+.btn-submit:hover  { transform: translateY(-2px); box-shadow: 0 6px 28px rgba(6,182,212,.5); }
+.btn-submit:active { transform: scale(.97); }
+
+/* ─────────────────────────────
+   RESULT SCREEN
+───────────────────────────── */
+.result-screen {
+  background:
+    radial-gradient(ellipse 80% 50% at 50% 0%, rgba(6,182,212,.12) 0%, transparent 60%),
+    var(--bg);
+  justify-content: flex-start;
+  padding-top: 1.2rem;
+  gap: 0;
+}
+
+.confetti-canvas {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.result-header {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: .4rem;
+  margin-bottom: 1.2rem;
+}
+
+.result-letter {
+  font-family: 'Fredoka One', cursive;
+  font-size: 3.5rem;
+  color: var(--yellow);
+  line-height: 1;
+  width: 80px; height: 80px;
+  display: flex; align-items: center; justify-content: center;
+  background: rgba(251,191,36,.12);
+  border-radius: 50%;
+  border: 2px solid rgba(251,191,36,.3);
+}
+
+.result-score-wrap {
+  display: flex;
+  align-items: baseline;
+  gap: .25rem;
+  margin-top: .2rem;
+}
+.result-score {
+  font-family: 'Fredoka One', cursive;
+  font-size: 3rem;
+  color: var(--yellow);
+  line-height: 1;
+}
+.result-max {
+  font-size: 1.2rem;
+  color: var(--text-dim);
+}
+.result-msg {
+  font-family: 'Fredoka One', cursive;
+  font-size: 1.3rem;
+  color: var(--cyan);
+}
+
+/* result list */
+.result-list {
+  list-style: none;
+  width: 100%;
+  max-width: 400px;
+  display: flex;
+  flex-direction: column;
+  gap: .6rem;
+  position: relative;
+  z-index: 1;
+}
+
+.result-item {
+  display: flex;
+  align-items: center;
+  gap: .7rem;
+  background: var(--bg3);
+  border-radius: var(--radius);
+  padding: .7rem 1rem;
+  border-right: 4px solid var(--color, #334155);
+  opacity: 0;
+  transform: translateX(20px);
+  animation: slide-in .35s ease forwards;
+  animation-delay: var(--delay, 0s);
+}
+@keyframes slide-in {
+  to { opacity: 1; transform: none; }
+}
+
+.ri-emoji { font-size: 1.3rem; flex-shrink: 0; }
+.ri-text  { flex: 1; display: flex; flex-direction: column; gap: .1rem; min-width: 0; }
+.ri-cat   { font-family: 'Fredoka One', cursive; font-size: .85rem; color: var(--text-dim); }
+.ri-msg   { font-size: .92rem; color: var(--text); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.ri-icon  { font-size: 1.2rem; flex-shrink: 0; }
+.ri-pts   {
+  font-family: 'Fredoka One', cursive;
+  font-size: 1.1rem;
+  color: var(--yellow);
+  min-width: 2.2rem;
+  text-align: left;
+}
+
+.result-actions {
+  position: relative;
+  z-index: 1;
+  margin-top: 1.5rem;
+  display: flex;
+  gap: .75rem;
+  width: 100%;
+  max-width: 400px;
+}
+
+.btn-again {
+  font-family: 'Fredoka One', cursive;
+  font-size: 1.3rem;
+  flex: 2;
+  background: linear-gradient(135deg, var(--yellow), #f59e0b);
+  color: #0b1120;
+  border: none;
+  border-radius: 50px;
+  padding: .7em 1em;
+  cursor: pointer;
+  box-shadow: 0 4px 20px rgba(251,191,36,.35);
+  transition: transform .15s, box-shadow .15s;
+}
+.btn-again:hover { transform: translateY(-2px); box-shadow: 0 6px 28px rgba(251,191,36,.5); }
+
+.btn-home {
+  font-family: 'Fredoka One', cursive;
+  font-size: 1.1rem;
+  flex: 1;
+  background: var(--bg3);
+  color: var(--text-dim);
+  border: 1.5px solid rgba(255,255,255,.1);
+  border-radius: 50px;
+  padding: .7em 1em;
+  cursor: pointer;
+  transition: background .2s, color .2s;
+}
+.btn-home:hover { background: rgba(255,255,255,.07); color: var(--text); }
+
+/* ─── Scrollbar ─── */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: var(--bg); }
+::-webkit-scrollbar-thumb { background: rgba(255,255,255,.12); border-radius: 3px; }
+
+/* ─── Selection ─── */
+::selection { background: rgba(251,191,36,.3); }
