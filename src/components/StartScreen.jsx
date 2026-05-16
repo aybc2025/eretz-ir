@@ -1,7 +1,9 @@
 import { useState } from "react";
+import { LETTERS } from "../data/words";
 
 export default function StartScreen({ onStart, scores }) {
   const [showScores, setShowScores] = useState(false);
+  const [showPicker, setShowPicker] = useState(false);
 
   return (
     <div className="screen start-screen">
@@ -19,15 +21,45 @@ export default function StartScreen({ onStart, scores }) {
         </h1>
         <p className="game-subtitle">חי · צומח · דומם</p>
 
-        <button className="btn-start" onClick={onStart}>
-          <span className="btn-start-text">בוא נשחק!</span>
-          <span className="btn-start-icon">🚀</span>
-        </button>
+        {/* כפתורים ראשיים */}
+        <div className="start-buttons">
+          <button className="btn-start" onClick={() => onStart(null)}>
+            <span className="btn-start-text">הגרל אות!</span>
+            <span className="btn-start-icon">🎲</span>
+          </button>
 
+          <button
+            className="btn-pick"
+            onClick={() => { setShowPicker((v) => !v); setShowScores(false); }}
+          >
+            <span>בחר אות</span>
+            <span>🔤</span>
+          </button>
+        </div>
+
+        {/* גריד בחירת אות */}
+        {showPicker && (
+          <div className="letter-picker">
+            <p className="picker-label">באיזה אות תשחק?</p>
+            <div className="picker-grid">
+              {LETTERS.map((l) => (
+                <button
+                  key={l}
+                  className="picker-letter"
+                  onClick={() => { setShowPicker(false); onStart(l); }}
+                >
+                  {l}
+                </button>
+              ))}
+            </div>
+          </div>
+        )}
+
+        {/* שיאים */}
         {scores.length > 0 && (
           <button
             className="btn-scores"
-            onClick={() => setShowScores((v) => !v)}
+            onClick={() => { setShowScores((v) => !v); setShowPicker(false); }}
           >
             {showScores ? "סגור" : "🏆 השיאים שלי"}
           </button>
