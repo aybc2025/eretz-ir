@@ -26,8 +26,9 @@ export function useGame() {
   const [results, setResults] = useState(null);
   const [score, setScore] = useState(0);
 
-  const startGame = useCallback(() => {
-    const newLetter = getRandomLetter();
+  // letter=null → הגרלה, letter=<string> → בחירה ידנית
+  const startGame = useCallback((letter = null) => {
+    const newLetter = letter ?? getRandomLetter();
     setLetter(newLetter);
     setAnswers({});
     setResults(null);
