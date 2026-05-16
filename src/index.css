@@ -561,3 +561,80 @@ body {
 
 /* ─── Selection ─── */
 ::selection { background: rgba(251,191,36,.3); }
+
+/* ─── Start buttons ─── */
+.start-buttons {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: .6rem;
+  width: 100%;
+}
+
+.btn-pick {
+  font-family: 'Fredoka One', cursive;
+  font-size: 1.2rem;
+  background: transparent;
+  color: var(--cyan);
+  border: 2px solid rgba(6,182,212,.45);
+  border-radius: 50px;
+  padding: .55em 2em;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: .5rem;
+  transition: background .2s, border-color .2s, transform .15s;
+}
+.btn-pick:hover {
+  background: rgba(6,182,212,.1);
+  border-color: var(--cyan);
+  transform: translateY(-2px);
+}
+.btn-pick:active { transform: scale(.97); }
+
+/* ─── Letter picker ─── */
+.letter-picker {
+  width: 100%;
+  background: var(--bg3);
+  border-radius: var(--radius);
+  padding: 1rem;
+  border: 1px solid rgba(255,255,255,.07);
+  animation: fade-up .25s ease;
+}
+@keyframes fade-up {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: none; }
+}
+
+.picker-label {
+  font-family: 'Fredoka One', cursive;
+  font-size: 1rem;
+  color: var(--text-dim);
+  text-align: center;
+  margin-bottom: .75rem;
+}
+
+.picker-grid {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: .45rem;
+}
+
+.picker-letter {
+  font-family: 'Fredoka One', cursive;
+  font-size: 1.3rem;
+  background: rgba(255,255,255,.05);
+  color: var(--yellow);
+  border: 1.5px solid rgba(251,191,36,.2);
+  border-radius: 10px;
+  padding: .4em 0;
+  cursor: pointer;
+  transition: background .15s, border-color .15s, transform .12s;
+  line-height: 1;
+}
+.picker-letter:hover {
+  background: rgba(251,191,36,.15);
+  border-color: rgba(251,191,36,.6);
+  transform: scale(1.12);
+}
+.picker-letter:active { transform: scale(.95); }
